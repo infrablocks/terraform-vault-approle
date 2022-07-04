@@ -1,0 +1,11 @@
+version: '2.1'
+
+services:
+  vault:
+    image: vault:1.10.4
+    environment:
+      - VAULT_DEV_ROOT_TOKEN_ID=supersecret
+    cap_add:
+      - IPC_LOCK
+    ports:
+      - "8200:8200"
