@@ -7,6 +7,9 @@ orbs:
 defaults: &defaults
   docker:
     - image: ruby:3.1.1
+    - image: vault:1.10.4
+      environment:
+        VAULT_DEV_ROOT_TOKEN_ID: supersecret
 
 slack_context: &slack_context
   context:
@@ -53,6 +56,7 @@ jobs:
   build:
     <<: *defaults
     steps:
+      - run: env
       - checkout
       - configure_tools
       - queue/until_front_of_line:
