@@ -189,10 +189,10 @@ namespace :test do
 
   desc 'Run integration tests'
   task :integration do
-    Rake::Task['dependencies:test:provision'] unless ENV['CI'] == 'true'
-    Rake::Task['test:rspec:integration']
+    Rake::Task['dependencies:test:provision'].invoke unless ENV['CI'] == 'true'
+    Rake::Task['test:rspec:integration'].invoke
     unless ENV['CI'] == 'true' || ENV.key?('DEPLOYMENT_IDENTIFIER')
-      Rake::Task['dependencies:test:destroy']
+      Rake::Task['dependencies:test:destroy'].invoke
     end
   end
 end
