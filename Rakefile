@@ -34,7 +34,6 @@ def tmpdir
   OS.osx? ? "/private#{base}" : base
 end
 
-
 task default: %i[
   test:code:fix
   test:integration
@@ -173,7 +172,7 @@ namespace :test do
     task check: [:rubocop]
 
     desc 'Attempt to automatically fix issues with the test code'
-    task fix: [:'rubocop:auto_correct']
+    task fix: [:'rubocop:autocorrect']
   end
 
   namespace :rspec do
@@ -190,9 +189,9 @@ namespace :test do
 
   desc 'Run integration tests'
   task :integration do
-    Rake::Task['dependencies:test:provision']
+    Rake::Task['dependencies:test:provision'] unless ENV['CI'] == 'true'
     Rake::Task['test:rspec:integration']
-    unless ENV.key?('DEPLOYMENT_IDENTIFIER')
+    unless ENV['CI'] == 'true' || ENV.key?('DEPLOYMENT_IDENTIFIER')
       Rake::Task['dependencies:test:destroy']
     end
   end
