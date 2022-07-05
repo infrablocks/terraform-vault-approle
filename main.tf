@@ -16,3 +16,14 @@ resource "vault_approle_auth_backend_role" "role" {
   token_num_uses         = var.token_num_uses
   token_type             = var.token_type
 }
+
+# Add token policies to role
+# Add default secret ID for role
+resource "vault_approle_auth_backend_role_secret_id" "default" {
+  role_name = vault_approle_auth_backend_role.role.role_name
+
+  metadata = jsonencode({
+    component: var.component,
+    deployment_identifier: var.deployment_identifier
+  })
+}
