@@ -171,4 +171,295 @@ describe 'approle' do
       expect(roles).to(include(role_name_matcher))
     end
   end
+
+  describe 'when token TTL specified' do
+    let(:expected_role_name) do
+      "#{component}-#{deployment_identifier}"
+    end
+
+    before(:context) do
+      provision(:root) do |vars|
+        vars.merge(
+          {
+            token_ttl: 300
+          }
+        )
+      end
+    end
+
+    after(:context) do
+      destroy(:root)
+    end
+
+    it 'uses the provided token TTL' do
+      role = Vault.approle.role(expected_role_name)
+
+      expect(role.data[:token_ttl]).to(eq(300))
+    end
+  end
+
+  describe 'when token max TTL specified' do
+    let(:expected_role_name) do
+      "#{component}-#{deployment_identifier}"
+    end
+
+    before(:context) do
+      provision(:root) do |vars|
+        vars.merge(
+          {
+            token_max_ttl: 600
+          }
+        )
+      end
+    end
+
+    after(:context) do
+      destroy(:root)
+    end
+
+    it 'uses the provided token max TTL' do
+      role = Vault.approle.role(expected_role_name)
+
+      expect(role.data[:token_max_ttl]).to(eq(600))
+    end
+  end
+
+  describe 'when token explicit max TTL specified' do
+    let(:expected_role_name) do
+      "#{component}-#{deployment_identifier}"
+    end
+
+    before(:context) do
+      provision(:root) do |vars|
+        vars.merge(
+          {
+            token_explicit_max_ttl: 900
+          }
+        )
+      end
+    end
+
+    after(:context) do
+      destroy(:root)
+    end
+
+    it 'uses the provided token explicit max TTL' do
+      role = Vault.approle.role(expected_role_name)
+
+      expect(role.data[:token_explicit_max_ttl]).to(eq(900))
+    end
+  end
+
+  describe 'when token num uses specified' do
+    let(:expected_role_name) do
+      "#{component}-#{deployment_identifier}"
+    end
+
+    before(:context) do
+      provision(:root) do |vars|
+        vars.merge(
+          {
+            token_num_uses: 10
+          }
+        )
+      end
+    end
+
+    after(:context) do
+      destroy(:root)
+    end
+
+    it 'uses the provided token num uses' do
+      role = Vault.approle.role(expected_role_name)
+
+      expect(role.data[:token_num_uses]).to(eq(10))
+    end
+  end
+
+  describe 'when token period specified' do
+    let(:expected_role_name) do
+      "#{component}-#{deployment_identifier}"
+    end
+
+    before(:context) do
+      provision(:root) do |vars|
+        vars.merge(
+          {
+            token_period: 300
+          }
+        )
+      end
+    end
+
+    after(:context) do
+      destroy(:root)
+    end
+
+    it 'uses the provided token num uses' do
+      role = Vault.approle.role(expected_role_name)
+
+      expect(role.data[:token_period]).to(eq(300))
+    end
+  end
+
+  describe 'when token bound CIDRs specified' do
+    let(:expected_role_name) do
+      "#{component}-#{deployment_identifier}"
+    end
+
+    before(:context) do
+      provision(:root) do |vars|
+        vars.merge(
+          {
+            token_bound_cidrs: %w[10.1.0.0/16 10.2.0.0/16]
+          }
+        )
+      end
+    end
+
+    after(:context) do
+      destroy(:root)
+    end
+
+    it 'uses the provided token bound cidrs' do
+      role = Vault.approle.role(expected_role_name)
+
+      expect(role.data[:token_bound_cidrs])
+        .to(eq(%w[10.1.0.0/16 10.2.0.0/16]))
+    end
+  end
+
+  describe 'when token type specified' do
+    let(:expected_role_name) do
+      "#{component}-#{deployment_identifier}"
+    end
+
+    before(:context) do
+      provision(:root) do |vars|
+        vars.merge(
+          {
+            token_type: 'batch'
+          }
+        )
+      end
+    end
+
+    after(:context) do
+      destroy(:root)
+    end
+
+    it 'uses the provided token type' do
+      role = Vault.approle.role(expected_role_name)
+
+      expect(role.data[:token_type])
+        .to(eq('batch'))
+    end
+  end
+
+  describe 'when bind secret ID specified' do
+    let(:expected_role_name) do
+      "#{component}-#{deployment_identifier}"
+    end
+
+    before(:context) do
+      provision(:root) do |vars|
+        vars.merge(
+          {
+            # required so that there is at least one constraint on the role
+            token_bound_cidrs: ['10.0.0.0/8'],
+            bind_secret_id: false
+          }
+        )
+      end
+    end
+
+    after(:context) do
+      destroy(:root)
+    end
+
+    it 'uses the provided bind secret ID value' do
+      role = Vault.approle.role(expected_role_name)
+
+      expect(role.data[:bind_secret_id]).to(eq(false))
+    end
+  end
+
+  describe 'when secret ID TTL specified' do
+    let(:expected_role_name) do
+      "#{component}-#{deployment_identifier}"
+    end
+
+    before(:context) do
+      provision(:root) do |vars|
+        vars.merge(
+          {
+            secret_id_ttl: 300
+          }
+        )
+      end
+    end
+
+    after(:context) do
+      destroy(:root)
+    end
+
+    it 'uses the provided secret ID TTL' do
+      role = Vault.approle.role(expected_role_name)
+
+      expect(role.data[:secret_id_ttl]).to(eq(300))
+    end
+  end
+
+  describe 'when secret ID bound CIDRs specified' do
+    let(:expected_role_name) do
+      "#{component}-#{deployment_identifier}"
+    end
+
+    before(:context) do
+      provision(:root) do |vars|
+        vars.merge(
+          {
+            secret_id_bound_cidrs: %w[10.1.0.0/16 10.2.0.0/16]
+          }
+        )
+      end
+    end
+
+    after(:context) do
+      destroy(:root)
+    end
+
+    it 'uses the provided secret ID bound CIDRs' do
+      role = Vault.approle.role(expected_role_name)
+
+      expect(role.data[:secret_id_bound_cidrs])
+        .to(eq(%w[10.1.0.0/16 10.2.0.0/16]))
+    end
+  end
+
+  describe 'when secret ID num uses specified' do
+    let(:expected_role_name) do
+      "#{component}-#{deployment_identifier}"
+    end
+
+    before(:context) do
+      provision(:root) do |vars|
+        vars.merge(
+          {
+            secret_id_num_uses: 10
+          }
+        )
+      end
+    end
+
+    after(:context) do
+      destroy(:root)
+    end
+
+    it 'uses the provided secret ID num uses' do
+      role = Vault.approle.role(expected_role_name)
+
+      expect(role.data[:secret_id_num_uses]).to(eq(10))
+    end
+  end
 end
