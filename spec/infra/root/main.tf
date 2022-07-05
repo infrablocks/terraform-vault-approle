@@ -27,6 +27,7 @@ module "approle" {
   token_ttl              = var.token_ttl
   token_max_ttl          = var.token_max_ttl
   token_period           = var.token_period
+  token_policies         = var.token_policies
   token_bound_cidrs      = var.token_bound_cidrs
   token_explicit_max_ttl = var.token_explicit_max_ttl
   token_num_uses         = var.token_num_uses

@@ -43,6 +43,10 @@ variable "token_period" {
   type    = number
   default = null
 }
+variable "token_policies" {
+  type = list(string)
+  default = null
+}
 variable "token_bound_cidrs" {
   default = null
   type    = list(string)

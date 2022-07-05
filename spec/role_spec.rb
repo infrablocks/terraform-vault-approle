@@ -55,6 +55,12 @@ describe 'approle' do
       expect(role.data[:token_period]).to(eq(0))
     end
 
+    it 'associates no policies to generated tokens' do
+      role = Vault.approle.role(expected_role_name)
+
+      expect(role.data[:token_policies]).to(eq([]))
+    end
+
     it 'uses a token type of "default" by default' do
       role = Vault.approle.role(expected_role_name)
 
@@ -299,6 +305,32 @@ describe 'approle' do
       role = Vault.approle.role(expected_role_name)
 
       expect(role.data[:token_period]).to(eq(300))
+    end
+  end
+
+  describe 'when token policies specified' do
+    let(:expected_role_name) do
+      "#{component}-#{deployment_identifier}"
+    end
+
+    before(:context) do
+      provision(:root) do |vars|
+        vars.merge(
+          {
+            token_policies: %w[some policies]
+          }
+        )
+      end
+    end
+
+    after(:context) do
+      destroy(:root)
+    end
+
+    it 'uses the provided token policies' do
+      role = Vault.approle.role(expected_role_name)
+
+      expect(role.data[:token_policies]).to(eq(%w[some policies]))
     end
   end
 

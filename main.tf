@@ -11,6 +11,7 @@ resource "vault_approle_auth_backend_role" "role" {
   token_ttl              = var.token_ttl
   token_max_ttl          = var.token_max_ttl
   token_period           = var.token_period
+  token_policies         = var.token_policies
   token_bound_cidrs      = var.token_bound_cidrs
   token_explicit_max_ttl = var.token_explicit_max_ttl
   token_num_uses         = var.token_num_uses
@@ -29,8 +30,8 @@ resource "vault_approle_auth_backend_role_secret_id" "default" {
   cidr_list = var.default_secret_id_cidr_list
 
   metadata = jsonencode({
-    component: var.component,
-    deployment_identifier: var.deployment_identifier,
-    label: "default"
+    component : var.component,
+    deployment_identifier : var.deployment_identifier,
+    label : "default"
   })
 }

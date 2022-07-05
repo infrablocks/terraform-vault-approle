@@ -61,6 +61,11 @@ variable "token_period" {
   description = "If set, indicates that the token generated using this role should never expire. The token should be renewed within the duration specified by this value. At each renewal, the token's TTL will be set to the value of this field. Specified in seconds."
   default     = null
 }
+variable "token_policies" {
+  type        = list(string)
+  description = "List of policies to encode onto generated tokens. Depending on the auth method, this list may be supplemented by user/group/other values."
+  default     = null
+}
 variable "token_bound_cidrs" {
   type        = list(string)
   description = "List of CIDR blocks; if set, specifies blocks of IP addresses which can authenticate successfully, and ties the resulting token to these blocks as well."
