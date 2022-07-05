@@ -1,4 +1,4 @@
-output "secret_id" {
-  value = module.approle.secret_id
+output "default_secret_id" {
+  value = module.approle.default_secret_id
   sensitive = true
 }

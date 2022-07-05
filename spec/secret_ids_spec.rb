@@ -13,7 +13,7 @@ describe 'secret IDs' do
 
     let(:secret_id_properties) do
       Vault.approle.secret_id(
-        expected_role_name, output(:root, 'secret_id')
+        expected_role_name, output(:root, 'default_secret_id')
       )
     end
 
@@ -25,7 +25,7 @@ describe 'secret IDs' do
       destroy(:root)
     end
 
-    it 'creates a default secret ID for the role' do
+    it 'creates a default secret ID for the role using the default backend' do
       secret_id_accessors =
         Vault.approle.secret_id_accessors(expected_role_name)
 
@@ -44,6 +44,50 @@ describe 'secret IDs' do
     it 'adds the deployment identifier to metadata' do
       expect(secret_id_properties.data[:metadata][:deployment_identifier])
         .to(eq(deployment_identifier))
+    end
+
+    it 'adds a label of "default" to metadata' do
+      expect(secret_id_properties.data[:metadata][:label])
+        .to(eq('default'))
+    end
+  end
+
+  describe 'when backend specified' do
+    let(:backend) do
+      output(:prerequisites, 'services_approle_path')
+    end
+
+    let(:expected_role_name) do
+      "#{component}-#{deployment_identifier}"
+    end
+
+    before(:context) do
+      provision(:root) do |vars|
+        vars.merge(
+          {
+            backend: output(:prerequisites, 'services_approle_path')
+          }
+        )
+      end
+    end
+
+    after(:context) do
+      destroy(:root)
+    end
+
+    it 'creates a default secret ID for the role in the supplied backend' do
+      secret_id_properties = begin
+        opts = { secret_id: output(:root, 'default_secret_id') }
+        path = "/v1/auth/#{backend}/role/#{expected_role_name}/secret-id/lookup"
+        json = Vault.client.post(path, JSON.fast_generate(opts), {})
+        Vault::Secret.decode(json) || nil
+      rescue Vault::HTTPError => e
+        raise unless e.code == 404
+
+        nil
+      end
+
+      expect(secret_id_properties).not_to(be_nil)
     end
   end
 end
