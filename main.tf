@@ -26,9 +26,11 @@ resource "vault_approle_auth_backend_role_secret_id" "default" {
 
   role_name = vault_approle_auth_backend_role.role.role_name
 
+  cidr_list = var.default_secret_id_cidr_list
+
   metadata = jsonencode({
     component: var.component,
     deployment_identifier: var.deployment_identifier,
-    label: 'default'
+    label: "default"
   })
 }

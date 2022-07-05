@@ -58,3 +58,8 @@ variable "token_num_uses" {
 variable "token_type" {
   default = null
 }
+
+variable "default_secret_id_cidr_list" {
+  type    = list(string)
+  default = null
+}

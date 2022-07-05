@@ -52,6 +52,37 @@ describe 'secret IDs' do
     end
   end
 
+  describe 'when secret ID bound CIDRs specified' do
+    let(:expected_role_name) do
+      "#{component}-#{deployment_identifier}"
+    end
+
+    let(:secret_id_properties) do
+      Vault.approle.secret_id(
+        expected_role_name, output(:root, 'default_secret_id')
+      )
+    end
+
+    before(:context) do
+      provision(:root) do |vars|
+        vars.merge(
+          {
+            default_secret_id_cidr_list: %w[10.1.0.0/16 10.2.0.0/16]
+          }
+        )
+      end
+    end
+
+    after(:context) do
+      destroy(:root)
+    end
+
+    it 'uses the provided CIDR list' do
+      expect(secret_id_properties.data[:cidr_list])
+        .to(eq(%w[10.1.0.0/16 10.2.0.0/16]))
+    end
+  end
+
   describe 'when backend specified' do
     let(:backend) do
       output(:prerequisites, 'services_approle_path')

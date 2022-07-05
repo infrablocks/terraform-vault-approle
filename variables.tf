@@ -82,3 +82,9 @@ variable "token_type" {
   description = "The type of token that should be generated. Can be service, batch, or default to use the mount's tuned default (which unless changed will be service tokens). For token store roles, there are two additional possibilities: default-service and default-batch which specify the type to return unless the client requests a different type at generation time."
   default     = null
 }
+
+variable "default_secret_id_cidr_list" {
+  type        = list(string)
+  description = "If set, specifies blocks of IP addresses which can perform the login operation using the default SecretID."
+  default     = null
+}
