@@ -29,7 +29,7 @@ describe 'approle' do
       expect(output(:root, 'role_name')).to(eq(expected_role_name))
     end
 
-    fit 'outputs the role ID' do
+    it 'outputs the role ID' do
       role_id = Vault.approle.role_id(expected_role_name)
 
       expect(output(:root, 'role_id')).to(eq(role_id))
