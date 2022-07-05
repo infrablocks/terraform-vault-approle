@@ -25,6 +25,16 @@ describe 'approle' do
         .to(include(expected_role_name))
     end
 
+    it 'outputs the role name' do
+      expect(output(:root, 'role_name')).to(eq(expected_role_name))
+    end
+
+    fit 'outputs the role ID' do
+      role_id = Vault.approle.role_id(expected_role_name)
+
+      expect(output(:root, 'role_id')).to(eq(role_id))
+    end
+
     it 'uses a token TTL of zero' do
       role = Vault.approle.role(expected_role_name)
 
