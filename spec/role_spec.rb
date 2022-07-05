@@ -380,7 +380,7 @@ describe 'approle' do
     it 'uses the provided bind secret ID value' do
       role = Vault.approle.role(expected_role_name)
 
-      expect(role.data[:bind_secret_id]).to(eq(false))
+      expect(role.data[:bind_secret_id]).to(be(false))
     end
   end
 

@@ -6,7 +6,7 @@ describe 'secret IDs' do
   let(:component) { vars(:root).component }
   let(:deployment_identifier) { vars(:root).deployment_identifier }
 
-  fdescribe 'by default' do
+  describe 'by default' do
     let(:expected_role_name) do
       "#{component}-#{deployment_identifier}"
     end
