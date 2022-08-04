@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (7.0.3)
+    activesupport (7.0.3.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
@@ -1299,7 +1299,7 @@ GEM
     hamster (3.0.0)
       concurrent-ruby (~> 1.0)
     hiera (3.9.0)
-    i18n (1.10.0)
+    i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     immutable-struct (2.4.1)
     iostreams (1.10.3)
@@ -1360,7 +1360,7 @@ GEM
       rake_dependencies (~> 3.1)
       rake_factory (~> 0.23)
       ruby-terraform (~> 1.4)
-    rake_vault (0.1.0.pre.1)
+    rake_vault (0.1.0.pre.2)
       colored2 (~> 3.1)
       rake_dependencies (~> 3.1)
       rake_factory (~> 0.23)
@@ -1427,7 +1427,7 @@ GEM
     thor (1.2.1)
     tins (1.31.1)
       sync
-    tzinfo (2.0.4)
+    tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.2.0)
     vault (0.17.0)
