@@ -78,7 +78,7 @@ describe 'full' do
       role = Vault.approle.role(expected_role_name)
 
       expect(role.data[:token_policies])
-        .to(eq(['some', 'policies']))
+        .to(eq(%w[some policies]))
     end
 
     it 'uses a token type of "default"' do

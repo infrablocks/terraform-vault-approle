@@ -28,16 +28,16 @@ describe 'secret IDs' do
     it 'creates a secret ID' do
       expect(@plan)
         .to(include_resource_creation(
-              type: 'vault_approle_auth_backend_role_secret_id'
-            )
+          type: 'vault_approle_auth_backend_role_secret_id'
+        )
               .once)
     end
 
     it 'associates it with the created role' do
       expect(@plan)
         .to(include_resource_creation(
-              type: 'vault_approle_auth_backend_role_secret_id'
-            )
+          type: 'vault_approle_auth_backend_role_secret_id'
+        )
               .with_attribute_value(
                 :role_name, "#{component}-#{deployment_identifier}"
               ))
@@ -46,24 +46,24 @@ describe 'secret IDs' do
     it 'uses the default backend' do
       expect(@plan)
         .to(include_resource_creation(
-              type: 'vault_approle_auth_backend_role_secret_id'
-            )
+          type: 'vault_approle_auth_backend_role_secret_id'
+        )
               .with_attribute_value(:backend, 'approle'))
     end
 
     it 'uses an empty CIDR list' do
       expect(@plan)
         .to(include_resource_creation(
-              type: 'vault_approle_auth_backend_role_secret_id'
-            )
+          type: 'vault_approle_auth_backend_role_secret_id'
+        )
               .with_attribute_value(:cidr_list, a_nil_value))
     end
 
     it 'adds the component to metadata' do
       expect(@plan)
         .to(include_resource_creation(
-              type: 'vault_approle_auth_backend_role_secret_id'
-            )
+          type: 'vault_approle_auth_backend_role_secret_id'
+        )
               .with_attribute_value(
                 :metadata,
                 matching(/"component":"#{component}"/)
@@ -73,8 +73,8 @@ describe 'secret IDs' do
     it 'adds the deployment identifier to metadata' do
       expect(@plan)
         .to(include_resource_creation(
-              type: 'vault_approle_auth_backend_role_secret_id'
-            )
+          type: 'vault_approle_auth_backend_role_secret_id'
+        )
               .with_attribute_value(
                 :metadata,
                 matching(/"deployment_identifier":"#{deployment_identifier}"/)
@@ -84,8 +84,8 @@ describe 'secret IDs' do
     it 'adds a label of "default" to metadata' do
       expect(@plan)
         .to(include_resource_creation(
-              type: 'vault_approle_auth_backend_role_secret_id'
-            )
+          type: 'vault_approle_auth_backend_role_secret_id'
+        )
               .with_attribute_value(
                 :metadata,
                 matching(/"label":"default"/)
@@ -103,8 +103,8 @@ describe 'secret IDs' do
     it 'uses the provided CIDR list' do
       expect(@plan)
         .to(include_resource_creation(
-              type: 'vault_approle_auth_backend_role_secret_id'
-            )
+          type: 'vault_approle_auth_backend_role_secret_id'
+        )
               .with_attribute_value(
                 :cidr_list, containing_exactly('10.1.0.0/16', '10.2.0.0/16')
               ))
@@ -125,8 +125,8 @@ describe 'secret IDs' do
     it 'uses the provided backend' do
       expect(@plan)
         .to(include_resource_creation(
-              type: 'vault_approle_auth_backend_role_secret_id'
-            )
+          type: 'vault_approle_auth_backend_role_secret_id'
+        )
               .with_attribute_value(:backend, backend))
     end
   end
