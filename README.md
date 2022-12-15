@@ -57,7 +57,6 @@ on your development machine:
 * git-crypt
 * gnupg
 * direnv
-* aws-vault
 
 #### Mac OS X Setup
 
@@ -88,9 +87,6 @@ brew install git
 brew install git-crypt
 brew install gnupg
 
-# aws-vault
-brew cask install
-
 # direnv
 brew install direnv
 echo "$(direnv hook bash)" >> ~/.bash_profile
@@ -118,37 +114,31 @@ To provision the module prerequisites:
 To provision the module contents:
 
 ```bash
-./go deployment:root:provision[<deployment_identifier>]
+./go deployment:root:provision[<seed>]
 ```
 
 To destroy the module contents:
 
 ```bash
-./go deployment:root:destroy[<deployment_identifier>]
+./go deployment:root:destroy[<seed>]
 ```
 
 To destroy the module prerequisites:
 
 ```bash
-./go deployment:prerequisites:destroy[<deployment_identifier>]
+ ./go deployment:prerequisites:destroy[<seed>]
 ```
 
 Configuration parameters can be overridden via environment variables:
 
 ```bash
-DEPLOYMENT_IDENTIFIER=testing ./go
+SEED=testing ./go
 ```
 
-When a deployment identifier is provided via an environment variable, 
-infrastructure will not be destroyed at the end of test execution. This can
-be useful during development to avoid lengthy provision and destroy cycles.
-
-By default, providers will be downloaded for each terraform execution. To
-cache providers between calls:
-
-```bash
-TF_PLUGIN_CACHE_DIR="$HOME/.terraform.d/plugin-cache" ./go
-```
+When a seed is provided via an environment variable, infrastructure will not be
+destroyed at the end of test execution. This can be useful during development to
+avoid lengthy provision and destroy cycles. To subsequently destroy the
+infrastructure, execute again with `FORCE_DESTROY=true`.
 
 ### Common Tasks
 
@@ -202,8 +192,8 @@ Contributing
 Bug reports and pull requests are welcome on GitHub at 
 https://github.com/infrablocks/terraform-vault-approle. 
 This project is intended to be a safe, welcoming space for collaboration, and 
-contributors are expected to adhere to 
-the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+contributors are expected to adhere to the
+[Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 License
 -------
